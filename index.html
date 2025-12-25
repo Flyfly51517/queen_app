@@ -3,235 +3,118 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Queen's Gambit 女王的棋局</title>
+    <title>Queen's Gambit 準董娘養成</title>
     
     <link rel="icon" type="image/png" href="icon.png">
     <link rel="apple-touch-icon" href="icon.png">
 
     <style>
-        /* --- CSS: 定義高級感的變數 --- */
+        /* --- CSS: 準董娘的高級質感 --- */
         :root {
-            --primary: #4A148C; /* 皇室深紫色 */
+            --primary: #4A148C;   /* 皇室深紫 */
             --primary-light: #7c43bd;
-            --accent: #C5A47E;  /* 香檳冷金 (用於點綴) */
-            
-            /* 背景漸層：營造高級紙張或大理石的質感 */
+            --accent: #D4AF37;    /* 香檳金 */
             --bg-gradient: linear-gradient(135deg, #fdfbfb 0%, #ebedee 100%);
-            
-            /* 卡片背景：微透明白色，製造玻璃質感 */
-            --card-bg: rgba(255, 255, 255, 0.92);
-            
-            --text-dark: #2D2D2D;
-            --text-grey: #757575;
-            
-            /* 高級感陰影：更柔和、更深邃 */
-            --shadow-soft: 0 10px 30px -10px rgba(0,0,0,0.15);
-            --shadow-sharp: 0 4px 15px rgba(0,0,0,0.08);
+            --card-bg: rgba(255, 255, 255, 0.9);
+            --text-dark: #1A237E;
+            --text-grey: #546E7A;
+            --shadow: 0 10px 30px rgba(0,0,0,0.08);
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            background: var(--bg-gradient); /* 套用質感背景 */
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background: var(--bg-gradient);
             color: var(--text-dark);
-            margin: 0;
-            padding: 0;
-            display: flex;
-            justify-content: center;
+            margin: 0; padding: 0;
+            display: flex; justify-content: center;
             min-height: 100vh;
         }
 
         .app-container {
-            width: 100%;
-            max-width: 480px;
-            min-height: 100vh;
-            padding: 20px;
-            box-sizing: border-box;
-            padding-bottom: 90px; /* 底部留空給導航列 */
-            position: relative;
-            overflow-x: hidden; /* 防止橫向滾動 */
+            width: 100%; max-width: 480px; min-height: 100vh;
+            padding: 20px; box-sizing: border-box; padding-bottom: 100px;
+            position: relative; overflow-x: hidden;
         }
 
-        /* --- Header 區域 --- */
-        header {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 25px;
-            padding-top: 10px;
-        }
-        
-        /* ✅ App Icon 樣式 */
-        .app-logo {
-            width: 45px;
-            height: 45px;
-            border-radius: 12px; /* 圓角矩形 */
-            box-shadow: var(--shadow-sharp);
-            margin-right: 12px;
-            border: 2px solid white; /* 加個白邊更有質感 */
-        }
+        /* Header */
+        header { display: flex; align-items: center; justify-content: center; margin-bottom: 20px; padding-top: 10px; }
+        .app-logo { width: 45px; height: 45px; border-radius: 12px; box-shadow: var(--shadow); margin-right: 12px; border: 2px solid white; object-fit: cover; }
+        h1 { margin: 0; font-size: 22px; font-weight: 800; color: var(--primary); letter-spacing: 0.5px; }
 
-        h1 {
-            margin: 0;
-            font-size: 22px;
-            font-weight: 800;
-            color: var(--primary);
-            letter-spacing: 0.5px;
-        }
-
-        /* --- 通用卡片樣式 (玻璃擬態) --- */
+        /* Glassmorphism Cards */
         .glass-card {
             background: var(--card-bg);
-            backdrop-filter: blur(10px); /* 磨砂玻璃效果 (部分瀏覽器支援) */
-            -webkit-backdrop-filter: blur(10px);
-            border-radius: 20px;
-            padding: 20px;
-            box-shadow: var(--shadow-soft);
-            border: 1px solid rgba(255, 255, 255, 0.5); /* 微發光邊框 */
-            margin-bottom: 20px;
+            backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+            border-radius: 20px; padding: 20px;
+            box-shadow: var(--shadow);
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            margin-bottom: 15px; transition: transform 0.2s;
         }
 
-        /* --- 盲盒心態卡片 (重新配色) --- */
+        /* 盲盒語錄卡 */
         .labubu-card {
-            /* 使用深紫到香檳金的漸層，更顯貴氣 */
-            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 60%, var(--accent) 100%);
-            color: white;
-            position: relative;
-            overflow: hidden;
+            background: linear-gradient(135deg, var(--primary) 0%, #7B1FA2 100%);
+            color: white; position: relative; overflow: hidden; cursor: pointer;
         }
-        
-        /* 加一點背景紋理裝飾 */
-        .labubu-card::before {
-            content: '';
-            position: absolute;
-            top: -50%; left: -50%;
-            width: 200%; height: 200%;
-            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 60%);
-            pointer-events: none;
+        .labubu-card::after {
+            content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 60%); pointer-events: none;
         }
+        .labubu-card h2 { font-size: 11px; opacity: 0.9; margin: 0; display: flex; align-items: center; letter-spacing: 1px; color: #E1BEE7; }
+        .labubu-card p { font-size: 18px; font-weight: bold; line-height: 1.4; margin: 15px 0; text-shadow: 0 2px 4px rgba(0,0,0,0.2); }
 
-        .labubu-card h2 { margin-top: 0; font-size: 13px; opacity: 0.9; display: flex; align-items: center; color: rgba(255,255,255,0.8); }
-        .labubu-card p { font-size: 19px; font-weight: bold; font-style: italic; line-height: 1.4; margin: 15px 0; text-shadow: 0 2px 4px rgba(0,0,0,0.2); }
-
-        /* --- 區塊標題 --- */
-        .section-title {
-            color: var(--text-grey);
-            font-size: 13px;
-            font-weight: 700;
-            margin: 25px 0 10px 5px;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-        }
-
-        /* --- ✅ 新增：每日晨間儀式 (Daily Ritual) --- */
-        .daily-list {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-
-        .daily-item {
-            display: flex;
-            align-items: center;
-            padding: 12px;
-            background: rgba(255,255,255,0.6);
-            border-radius: 12px;
-            transition: all 0.3s ease;
-            cursor: pointer;
-        }
-
-        /* 隱藏預設 checkbox */
-        .daily-item input[type="checkbox"] { display: none; }
-
-        /* 自定義 checkbox 外觀 */
-        .checkbox-custom {
-            width: 22px; height: 22px;
-            border-radius: 6px;
-            border: 2px solid var(--accent);
-            margin-right: 15px;
-            display: flex; align-items: center; justify-content: center;
-            transition: all 0.2s;
-        }
-        .checkbox-custom i { color: white; font-size: 14px; transform: scale(0); transition: all 0.2s; }
-
-        /* 勾選後的狀態 */
-        .daily-item input:checked + .checkbox-custom { background: var(--accent); border-color: var(--accent); }
-        .daily-item input:checked + .checkbox-custom i { transform: scale(1); }
-        .daily-item input:checked ~ span { text-decoration: line-through; color: var(--text-grey); }
-
-        /* --- 功能網格 --- */
-        .grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 15px;
-        }
-
+        /* 功能網格 */
+        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 20px; }
         .feature-card {
-            background: var(--card-bg);
-            border-radius: 18px;
-            padding: 20px 15px;
-            text-align: center;
-            box-shadow: var(--shadow-sharp);
-            cursor: pointer;
-            transition: transform 0.2s, box-shadow 0.2s;
-            border: 1px solid rgba(255,255,255,0.8);
+            background: rgba(255,255,255,0.8); border-radius: 16px; padding: 18px 10px; text-align: center;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.03); cursor: pointer; border: 1px solid white;
         }
-
         .feature-card:active { transform: scale(0.96); }
-        .feature-card i { font-size: 28px; display: block; margin-bottom: 12px; }
-        /* 為不同功能指定專屬的高級色 */
-        .fc-radar i { color: #5C6BC0; }
-        .fc-auditor i { color: #66BB6A; }
-        .fc-locker i { color: #29B6F6; }
-        .fc-dojo i { color: #FFA726; }
-        
-        .feature-card h3 { margin: 0; font-size: 15px; color: var(--text-dark); font-weight: 600; }
-        .feature-card span { font-size: 11px; color: var(--text-grey); display: block; margin-top: 5px;}
+        .feature-card i { font-size: 28px; display: block; margin-bottom: 8px; }
+        .feature-card h3 { margin: 0; font-size: 14px; font-weight: 700; color: #333; }
+        .feature-card span { font-size: 10px; color: #888; display: block; margin-top: 4px; }
 
-        /* --- 頁面切換與導航 --- */
-        .page { display: none; animation: fadeScale 0.3s cubic-bezier(0.4, 0.0, 0.2, 1); }
-        .page.active { display: block; }
-        @keyframes fadeScale { from { opacity: 0; transform: scale(0.98); } to { opacity: 1; transform: scale(1); } }
+        /* Icon Colors */
+        .fc-invest i { color: #FBC02D; }   /* 金 */
+        .fc-radar i { color: #E91E63; }    /* 紅 */
+        .fc-auditor i { color: #43A047; }  /* 綠 */
+        .fc-locker i { color: #039BE5; }   /* 藍 */
 
-        /* 底部導航列 (玻璃質感) */
+        /* 投資記帳本樣式 */
+        .invest-input { width: 100%; padding: 12px; border-radius: 12px; border: 1px solid #ddd; margin-bottom: 10px; box-sizing: border-box; font-size: 14px; outline: none; }
+        .invest-input:focus { border-color: var(--primary); }
+        .invest-btn { width: 100%; padding: 12px; background: var(--primary); color: white; border: none; border-radius: 12px; font-weight: bold; cursor: pointer; margin-top: 5px; }
+        .invest-list { margin-top: 15px; max-height: 350px; overflow-y: auto; }
+        .invest-item { display: flex; justify-content: space-between; align-items: center; padding: 12px; background: white; border-radius: 10px; margin-bottom: 8px; font-size: 13px; box-shadow: 0 2px 5px rgba(0,0,0,0.02); }
+        .invest-delete { color: #aaa; margin-left: 10px; cursor: pointer; }
+
+        /* 導航列 */
         .nav-bar {
-            position: fixed;
-            bottom: 20px; left: 50%;
-            transform: translateX(-50%);
+            position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%);
             width: calc(100% - 40px); max-width: 440px;
-            background: rgba(255, 255, 255, 0.9); /* 半透明 */
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            display: flex;
-            justify-content: space-around;
-            padding: 12px 0;
-            box-shadow: var(--shadow-soft);
-            border-radius: 25px; /* 圓潤造型 */
-            z-index: 100;
+            background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(20px);
+            display: flex; justify-content: space-around; padding: 12px 0;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1); border-radius: 30px; z-index: 100;
             border: 1px solid rgba(255,255,255,0.5);
         }
-        .nav-item { text-align: center; color: #BBB; font-size: 11px; cursor: pointer; transition: color 0.3s; }
+        .nav-item { text-align: center; color: #B0BEC5; font-size: 10px; cursor: pointer; transition: color 0.3s; }
         .nav-item.active { color: var(--primary); font-weight: 700; }
-        .nav-item i { display: block; font-size: 22px; margin-bottom: 4px; }
+        .nav-item i { display: block; font-size: 20px; margin-bottom: 2px; }
 
-        /* --- 其他頁面元件優化 --- */
-        .back-btn { background: none; border: none; font-size: 16px; color: var(--primary-light); cursor: pointer; margin-bottom: 15px; display: flex; align-items: center; font-weight: 600;}
-        h2 { color: var(--primary); font-size: 20px; margin-top: 0;}
+        /* 頁面切換 */
+        .page { display: none; animation: fadeIn 0.3s ease; }
+        .page.active { display: block; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
 
-        /* 審計員輸入框 */
-        textarea { width: 100%; height: 120px; padding: 15px; border-radius: 15px; border: 2px solid #eee; margin-bottom: 15px; font-size: 16px; box-sizing: border-box; background: rgba(255,255,255,0.8); transition: border 0.3s; outline: none;}
-        textarea:focus { border-color: var(--primary-light); }
-        .feedback-box { padding: 15px; border-radius: 15px; background: #eee; font-weight: bold; white-space: pre-line; }
+        .back-btn { background: none; border: none; color: var(--primary); font-weight: 600; cursor: pointer; margin-bottom: 15px; display: flex; align-items: center; font-size: 14px; }
+        
+        /* 區塊標題 */
+        .section-title { font-size: 11px; font-weight: 800; color: var(--text-grey); margin: 25px 0 10px 5px; letter-spacing: 1px; text-transform: uppercase; }
 
-        /* 按鈕優化 */
-        .btn-outline { border: 2px solid var(--primary); color: var(--primary); background: transparent; padding: 12px 25px; border-radius: 25px; cursor: pointer; margin-top: 10px; font-weight: 600; transition: all 0.2s; }
-        .btn-outline:active { background: var(--primary-light); color: white; border-color: transparent;}
-        .freeze-btn { width: 100%; padding: 15px; background: linear-gradient(to right, var(--primary), var(--primary-light)); color: white; border: none; border-radius: 15px; font-size: 18px; cursor: pointer; font-weight: bold; box-shadow: 0 4px 10px rgba(106, 27, 154, 0.3); }
-        .freeze-btn.disabled { background: #ccc; box-shadow: none; }
-
-        /* 雷達勾選 */
-        .checklist-item { display: flex; align-items: center; padding: 15px; background: rgba(255,255,255,0.8); margin-bottom: 10px; border-radius: 15px; border: 1px solid white;}
-        .checklist-item input { margin-right: 15px; transform: scale(1.3); accent-color: var(--primary); }
-
+        /* 其他元件 */
+        textarea { width: 100%; height: 120px; padding: 15px; border-radius: 15px; border: 1px solid #ddd; margin-bottom: 15px; box-sizing: border-box; font-size: 15px; outline: none; resize: none; background: #fff; }
+        .checklist-item { display: flex; align-items: center; padding: 14px; background: white; margin-bottom: 10px; border-radius: 12px; border: 1px solid #f0f0f0; }
+        .checklist-item input { margin-right: 12px; transform: scale(1.3); accent-color: var(--primary); }
     </style>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
 </head>
@@ -241,279 +124,408 @@
     
     <div id="page-home" class="page active">
         <header>
-            <img src="icon.png" alt="Logo" class="app-logo">
+            <img src="icon.png" alt="Logo" class="app-logo" onerror="this.style.display='none'">
             <h1>Queen's Gambit</h1>
         </header>
 
         <div class="glass-card labubu-card" onclick="refreshQuote()">
-            <h2><i class="fas fa-gem"></i>&nbsp; Labubu Mindset 盲盒心法</h2>
-            <p id="daily-quote">"我是定價 $450 的限量盲盒，嫌貴就別買。"</p>
-            <div style="font-size: 11px; text-align: right; margin-top: 15px; opacity: 0.8; letter-spacing: 1px;">TAP TO REFRESH</div>
-        </div>
-
-        <div class="section-title">每日晨間儀式 DAILY RITUAL</div>
-        <div class="glass-card daily-list">
-            <label class="daily-item">
-                <input type="checkbox">
-                <div class="checkbox-custom"><i class="fas fa-check"></i></div>
-                <span>核心自信確認 (我是獎品，不是追求者)</span>
-            </label>
-            <label class="daily-item">
-                <input type="checkbox">
-                <div class="checkbox-custom"><i class="fas fa-check"></i></div>
-                <span>情緒護盾開啟 (保持穩定，不隨之起舞)</span>
-            </label>
-            <label class="daily-item">
-                <input type="checkbox">
-                <div class="checkbox-custom"><i class="fas fa-check"></i></div>
-                <span>外貌資產盤點 (妝容穿搭確認完畢)</span>
-            </label>
+            <h2><i class="fas fa-crown"></i>&nbsp; 準董娘心法 (點擊更新)</h2>
+            <p id="daily-quote">"男人投資在哪裡，心就在哪裡。"</p>
         </div>
 
         <div class="section-title">戰術工具箱 TACTICAL TOOLS</div>
         <div class="grid">
+            <div class="feature-card fc-invest" onclick="navTo('invest')">
+                <i class="fas fa-hand-holding-usd"></i>
+                <h3>投資記帳本</h3>
+                <span>計算他的ROI</span>
+            </div>
             <div class="feature-card fc-radar" onclick="navTo('radar')">
                 <i class="fas fa-radar"></i>
-                <h3>男嘉賓雷達</h3>
-                <span>理性篩選</span>
+                <h3>優質男雷達</h3>
+                <span>篩選高資產男</span>
             </div>
             <div class="feature-card fc-auditor" onclick="navTo('auditor')">
-                <i class="fas fa-pen-fancy"></i>
+                <i class="fas fa-comments"></i>
                 <h3>訊息審計員</h3>
-                <span>話術優化</span>
+                <span>高位話術</span>
             </div>
             <div class="feature-card fc-locker" onclick="navTo('locker')">
                 <i class="fas fa-snowflake"></i>
                 <h3>情緒冷凍庫</h3>
                 <span>強制冷靜</span>
             </div>
-            <div class="feature-card fc-dojo" onclick="navTo('dojo')">
-                <i class="fas fa-chess-queen"></i>
-                <h3>修煉道場</h3>
-                <span>實戰練習</span>
+        </div>
+        
+        <div class="glass-card" style="margin-top: 15px; text-align: center; cursor: pointer; border-left: 5px solid #673AB7;" onclick="navTo('dojo')">
+            <div style="display:flex; align-items:center; justify-content:center; color:#673AB7; margin-bottom:5px;">
+                <i class="fas fa-chess-queen" style="font-size: 24px; margin-right:10px;"></i>
+                <h3 style="margin: 0; font-size: 16px;">修煉道場 (50題)</h3>
             </div>
+            <span style="font-size: 12px; color: #666;">針對「年薪400萬男」的實戰演練</span>
+        </div>
+    </div>
+
+    <div id="page-invest" class="page">
+        <button class="back-btn" onclick="navTo('home')"><i class="fas fa-arrow-left"></i>&nbsp; 返回首頁</button>
+        <h2>💰 他的投資紀錄</h2>
+        <div class="glass-card">
+            <p style="font-size: 13px; color: #666; margin-top: 0;">紀錄他對妳付出的「實質」投入。數據不會說謊。</p>
+            
+            <input type="text" id="invest-desc" class="invest-input" placeholder="項目 (例: 接送、禮物、規劃行程)">
+            <select id="invest-type" class="invest-input">
+                <option value="money">💸 金錢投入 (禮物/大餐)</option>
+                <option value="time">⏳ 時間投入 (接送/陪伴)</option>
+                <option value="effort">❤️ 情緒投入 (用心/驚喜)</option>
+            </select>
+            <input type="number" id="invest-val" class="invest-input" placeholder="估計價值 (元) 或 時間 (分)">
+            <button class="invest-btn" onclick="addInvest()">寫入帳本</button>
+        </div>
+        
+        <div class="section-title">歷史紀錄 LOG (自動儲存)</div>
+        <div id="invest-history" class="invest-list">
+            </div>
+        <div style="text-align:center; margin-top:10px;">
+            <span style="font-size:12px; color:#aaa; cursor:pointer;" onclick="clearInvest()">[清除所有紀錄]</span>
         </div>
     </div>
 
     <div id="page-radar" class="page">
-        <button class="back-btn" onclick="navTo('home')"><i class="fas fa-arrow-left"></i>&nbsp; 返回</button>
-        <h2>🧐 男嘉賓雷達</h2>
-        <div class="glass-card">
-            <p style="color:var(--text-grey); font-size:14px; margin-top:0;">請勾選觀察到的行為，啟動理性腦：</p>
-            <div id="checklist-container">
-                </div>
-            <div id="radar-result" class="result-box" style="padding: 20px; text-align: center; font-weight: bold; border-radius: 15px; margin-top: 20px; color: white; display: none; box-shadow: var(--shadow-soft);"></div>
-        </div>
+        <button class="back-btn" onclick="navTo('home')"><i class="fas fa-arrow-left"></i>&nbsp; 返回首頁</button>
+        <h2>🧐 優質男篩選雷達</h2>
+        <div id="checklist-container"></div>
+        <div id="radar-result" class="glass-card" style="display:none; text-align:center; font-weight:bold; margin-top:20px;"></div>
     </div>
 
     <div id="page-auditor" class="page">
-        <button class="back-btn" onclick="navTo('home')"><i class="fas fa-arrow-left"></i>&nbsp; 返回</button>
+        <button class="back-btn" onclick="navTo('home')"><i class="fas fa-arrow-left"></i>&nbsp; 返回首頁</button>
         <h2>📝 訊息審計員</h2>
-        <div class="glass-card">
-            <p style="color:var(--text-grey); font-size:14px; margin-top:0;">發送前，先讓審計員過目：</p>
-            <textarea id="msg-input" placeholder="貼上妳的草稿..." oninput="analyzeMessage()"></textarea>
-            <div id="msg-feedback" class="feedback-box" style="color: grey; background: rgba(0,0,0,0.05);">等待輸入...</div>
-        </div>
+        <textarea id="msg-input" placeholder="貼上妳想傳給他的訊息..." oninput="analyzeMessage()"></textarea>
+        <div id="msg-feedback" class="glass-card" style="color: #666; font-size:14px;">等待輸入...</div>
     </div>
 
     <div id="page-locker" class="page">
-        <button class="back-btn" onclick="navTo('home')"><i class="fas fa-arrow-left"></i>&nbsp; 返回</button>
+        <button class="back-btn" onclick="navTo('home')"><i class="fas fa-arrow-left"></i>&nbsp; 返回首頁</button>
         <h2>❄️ 情緒冷凍庫</h2>
         <div class="glass-card" style="text-align: center;">
-            <i class="fas fa-icicles" style="font-size: 50px; color: var(--accent); margin-bottom: 20px;"></i>
-            <p style="color: var(--text-grey);">想發脾氣？他已讀不回？<br>現在回覆就輸了。</p>
-            
-            <div id="timer-display" style="font-size: 60px; font-weight: 800; color: var(--primary); margin: 30px 0; font-variant-numeric: tabular-nums;">00:00</div>
-            
-            <button id="btn-freeze" class="freeze-btn" onclick="startFreeze(10)">⚡️ 體驗冷凍 (10秒)</button>
-            <br><br>
-            <button class="freeze-btn" style="background: linear-gradient(to right, #d32f2f, #c2185b); box-shadow: 0 4px 10px rgba(194, 24, 91, 0.3);" onclick="startFreeze(3600)">🔒 正式冷凍 (1小時)</button>
-            
-            <p id="freeze-msg" style="margin-top: 25px; color: var(--accent); font-weight: bold; display: none;">❄️ 冷凍執行中，沈默是最大的懲罰。</p>
+            <p style="color:#666; font-size:13px;">想發脾氣？已讀不回很焦慮？<br>先按下按鈕，不要毀了妳的高位。</p>
+            <div id="timer-display" style="font-size: 50px; font-weight: 800; color: var(--primary); margin: 30px 0; font-variant-numeric: tabular-nums;">00:00:00</div>
+            <button id="btn-freeze-short" class="invest-btn" onclick="startFreeze(10)" style="background: #00BCD4; margin-bottom: 10px;">⚡️ 體驗冷凍 (10秒)</button>
+            <button id="btn-freeze-long" class="invest-btn" onclick="startFreeze(3600)" style="background: #c62828;">🔒 正式冷凍 (1小時)</button>
+            <p id="freeze-msg" style="display:none; margin-top:15px; color:#c62828; font-weight:bold;">冷凍中，禁止聯繫！</p>
         </div>
     </div>
 
     <div id="page-dojo" class="page">
-        <button class="back-btn" onclick="navTo('home')"><i class="fas fa-arrow-left"></i>&nbsp; 返回</button>
-        <h2>🥋 溫柔不好惹道場</h2>
-        
-        <div class="glass-card quiz-card" style="text-align: center;">
-            <div style="margin-bottom: 20px;"><i class="fas fa-graduation-cap" style="font-size: 40px; color: var(--primary-light);"></i></div>
-            <div id="dojo-q" style="font-size: 18px; font-weight: bold; margin-bottom: 25px; line-height: 1.5;">題目載入中...</div>
-            <button id="btn-show-ans" class="btn-outline" onclick="showAnswer()">查看高位回覆</button>
-            <div id="dojo-a" style="background: rgba(76, 175, 80, 0.1); padding: 20px; border-radius: 15px; color: #2E7D32; display: none; text-align: left; margin-top: 20px; border: 1px solid rgba(76, 175, 80, 0.3);"></div>
+        <button class="back-btn" onclick="navTo('home')"><i class="fas fa-arrow-left"></i>&nbsp; 返回首頁</button>
+        <h2>🥋 修煉道場 (50題)</h2>
+        <div class="glass-card" style="text-align: center; min-height: 250px; display:flex; flex-direction:column; justify-content:center;">
+            <div id="dojo-q" style="font-size: 18px; font-weight: bold; margin-bottom: 20px; line-height: 1.5;">題目載入中...</div>
+            <button id="btn-show-ans" class="invest-btn" style="background:none; border:2px solid var(--primary); color:var(--primary); width:auto; margin:0 auto;" onclick="showAnswer()">查看高位回覆</button>
+            <div id="dojo-a" style="margin-top:20px; text-align:left; display:none; background:#f0f4c3; padding:15px; border-radius:10px; color:#33691e; line-height:1.6;"></div>
         </div>
-
-        <div style="display: flex; justify-content: space-between; margin-top: 20px; padding: 0 20px;">
-            <button class="btn-outline" style="padding: 10px 20px; font-size: 14px;" onclick="nextQuiz(-1)">上一題</button>
-            <button class="btn-outline" style="padding: 10px 20px; font-size: 14px;" onclick="nextQuiz(1)">下一題</button>
+        <div style="display:flex; justify-content:space-between; margin-top:15px; padding:0 10px;">
+            <button class="back-btn" onclick="nextQuiz(-1)">上一題</button>
+            <span id="quiz-counter" style="font-size:12px; color:#aaa; line-height:30px;">1 / 50</span>
+            <button class="back-btn" onclick="nextQuiz(1)">下一題</button>
         </div>
     </div>
 
     <div class="nav-bar">
-        <div class="nav-item active" onclick="navTo('home')">
-            <i class="fas fa-crown"></i>
-            首頁
-        </div>
-        <div class="nav-item" onclick="navTo('auditor')">
-            <i class="fas fa-file-signature"></i>
-            審計
-        </div>
-        <div class="nav-item" onclick="navTo('locker')">
-            <i class="fas fa-hourglass-half"></i>
-            冷凍
-        </div>
+        <div class="nav-item active" onclick="navTo('home')"><i class="fas fa-home"></i>首頁</div>
+        <div class="nav-item" onclick="navTo('invest')"><i class="fas fa-wallet"></i>投資</div>
+        <div class="nav-item" onclick="navTo('radar')"><i class="fas fa-search"></i>雷達</div>
+        <div class="nav-item" onclick="navTo('auditor')"><i class="fas fa-edit"></i>審計</div>
     </div>
 
 </div>
 
 <script>
-    /* JS 邏輯保持不變 */
-
-    // --- 1. 頁面導航系統 ---
+    // --- 1. 頁面導航 ---
     function navTo(pageId) {
         document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
         document.getElementById('page-' + pageId).classList.add('active');
-        document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
-        
-        // 簡單的導航激活狀態切換
-        if(pageId === 'home') document.querySelector('.nav-item:nth-child(1)').classList.add('active');
-        if(pageId === 'auditor') document.querySelector('.nav-item:nth-child(2)').classList.add('active');
-        if(pageId === 'locker') document.querySelector('.nav-item:nth-child(3)').classList.add('active');
-
         window.scrollTo(0,0);
+        
+        // 更新 Nav 狀態
+        document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
+        if(pageId === 'home') document.querySelectorAll('.nav-item')[0].classList.add('active');
+        if(pageId === 'invest') document.querySelectorAll('.nav-item')[1].classList.add('active');
+        if(pageId === 'radar') document.querySelectorAll('.nav-item')[2].classList.add('active');
+        if(pageId === 'auditor') document.querySelectorAll('.nav-item')[3].classList.add('active');
     }
 
-    // --- 2. 盲盒心態語錄 ---
+    // --- 2. 盲盒心法 (30句完整版) ---
     const quotes = [
-        "我是定價 $450 的限量盲盒，嫌貴就別買。",
-        "不要當 $100 的說明書，要當讓人猜不透的隱藏版。",
+        "我是定價 450 的限量盲盒，嫌貴就別買。",
+        "不要當免費的試用品，要當需要預約的奢侈品。",
         "男人的抱怨是投入成本的開始，讓他嫌，讓他買。",
         "機率只有 1.4%，他能約到我是他運氣好。",
-        "保持間歇性獎勵，不要每次都讓他中獎。",
         "強者從不自證，只看結果。",
-        "今天也要保持『溫柔但不好惹』的邊界感。"
+        "溫柔是我的修養，不好惹是我的原則。",
+        "他的錢在哪裡，心就在哪裡；沒有投入就沒有愛。",
+        "不要聽他說了什麼，要看他為了妳放棄了什麼。",
+        "情緒穩定是為了讓自己優雅，不是為了讓他方便。",
+        "對他好是獎勵，不是義務。獎勵要看表現。",
+        "妳的底線決定了他的上限。",
+        "敢於失去，才能真正擁有。",
+        "年薪 400 萬沒用，願意花在妳身上才算數。",
+        "不要做他的「賢內助」，要做他的「合夥人」。",
+        "保持 30% 的神秘感，那是妳的護城河。",
+        "隨傳隨到是廉價的表現，忙碌是高價值的證明。",
+        "男人是獵人，獵物不會自己跳進網子裡。",
+        "停止自我感動，看懂數據（投入）才不會輸。",
+        "妳的時間比他的錢更貴。",
+        "每一次「沒關係」，都是在降低妳的身價。",
+        "想要優質男，先戒掉對垃圾男的同情心。",
+        "他冷妳就冷，鏡像法則永遠有效。",
+        "不要解釋，解釋是弱者的防禦。",
+        "撒嬌是手段，獨立是底氣。",
+        "妳值得最好的，這不是口號，是事實。",
+        "篩選大於改變，別試圖教豬爬樹。",
+        "他的承諾是期貨，現貨（行動）才值錢。",
+        "做一個讓他覺得「如果不努力就會失去」的女人。",
+        "妳是獎品，不是追求者。",
+        "高位框架：我可以愛你，也可以換了你。"
     ];
     function refreshQuote() {
-        const randomQuote = quotes[Math.floor(Math.random() * quotes.length)];
-        document.getElementById('daily-quote').innerText = '"' + randomQuote + '"';
+        const q = quotes[Math.floor(Math.random() * quotes.length)];
+        document.getElementById('daily-quote').innerText = '"' + q + '"';
     }
     refreshQuote();
 
-    // --- 3. 訊息審計員 ---
+    // --- 3. 投資記帳本 (含 localStorage 儲存) ---
+    let investments = JSON.parse(localStorage.getItem('queen_investments')) || [];
+    
+    // 初始化載入
+    renderInvest();
+
+    function addInvest() {
+        const desc = document.getElementById('invest-desc').value;
+        const type = document.getElementById('invest-type').value;
+        const val = document.getElementById('invest-val').value;
+        
+        if(!desc || !val) { alert("請填寫完整！"); return; }
+        
+        investments.unshift({ 
+            id: Date.now(),
+            desc, type, val, 
+            date: new Date().toLocaleDateString() 
+        });
+        
+        saveInvest();
+        renderInvest();
+        
+        document.getElementById('invest-desc').value = '';
+        document.getElementById('invest-val').value = '';
+        alert("💰 已寫入！看著這些紀錄，理性評估他的價值。");
+    }
+
+    function saveInvest() {
+        localStorage.setItem('queen_investments', JSON.stringify(investments));
+    }
+
+    function renderInvest() {
+        const list = document.getElementById('invest-history');
+        if (investments.length === 0) {
+            list.innerHTML = '<div style="text-align:center; color:#ccc; padding:20px;">尚無紀錄，開始觀察他的投入吧。</div>';
+            return;
+        }
+        list.innerHTML = investments.map(i => {
+            let icon = i.type === 'money' ? '💸' : (i.type === 'time' ? '⏳' : '❤️');
+            return `<div class="invest-item">
+                <div style="flex:1;">${icon} <strong>${i.desc}</strong> <div style="font-size:11px;color:#999">${i.date}</div></div>
+                <div style="font-weight:bold; color:#2E7D32; margin-right:10px;">+${i.val}</div>
+                <div class="invest-delete" onclick="deleteInvest(${i.id})">✕</div>
+            </div>`;
+        }).join('');
+    }
+
+    function deleteInvest(id) {
+        if(!confirm("確定刪除這條紀錄？")) return;
+        investments = investments.filter(i => i.id !== id);
+        saveInvest();
+        renderInvest();
+    }
+    
+    function clearInvest() {
+        if(!confirm("確定清空所有紀錄？")) return;
+        investments = [];
+        saveInvest();
+        renderInvest();
+    }
+
+    // --- 4. 訊息審計 (高位話術檢查) ---
     function analyzeMessage() {
         const text = document.getElementById('msg-input').value;
-        const feedback = document.getElementById('msg-feedback');
-        let warnings = [];
-
-        if (text.length > 40) warnings.push("⚠️ 太長了！超過 40 字顯得卑微，請刪減 50%。");
-        if (text.includes("拜託") || text.includes("求你") || text.includes("沒關係")) warnings.push("⚠️ 偵測到低能量詞彙（拜託/沒關係）。");
-        if (text.includes("因為")) warnings.push("⚠️ 不要過度解釋，強者不自證。");
-
-        if (text.length === 0) {
-            feedback.innerHTML = "等待輸入...";
-            feedback.style.color = "grey"; feedback.style.background = "rgba(0,0,0,0.05)";
-        } else if (warnings.length === 0) {
-            feedback.innerHTML = "✅ 完美！<br>簡潔、有力、神秘。<br>這就是高位者的語氣。";
-            feedback.style.color = "#2E7D32"; feedback.style.background = "rgba(76, 175, 80, 0.1)";
-        } else {
-            feedback.innerHTML = warnings.join("<br><br>");
-            feedback.style.color = "#c62828"; feedback.style.background = "rgba(198, 40, 40, 0.1)";
+        const fb = document.getElementById('msg-feedback');
+        let err = [];
+        if(text.length > 40) err.push("⚠️ 太長了！長篇大論顯得卑微，刪減 50%。");
+        if(text.includes("拜託") || text.includes("沒關係") || text.includes("原諒")) err.push("⚠️ 偵測到低能量詞彙（拜託/沒關係）。");
+        if(text.includes("因為") && text.length > 10) err.push("⚠️ 不要過度解釋，強者不自證。");
+        if(text.includes("在嗎") || text.includes("想你")) err.push("⚠️ 不要主動索取關注，要吸引他來找妳。");
+        
+        if(!text) { 
+            fb.innerHTML = "等待輸入..."; fb.style.background="white"; fb.style.color="#666";
+        } else if(err.length === 0) { 
+            fb.innerHTML = "✅ 完美高位語氣！<br>簡潔、有力、神秘。"; 
+            fb.style.background="#E8F5E9"; fb.style.color="#2E7D32"; 
+        } else { 
+            fb.innerHTML = err.join("<br>"); 
+            fb.style.background="#FFEBEE"; fb.style.color="#C62828"; 
         }
     }
 
-    // --- 4. 雷達 Checklist ---
-    const checklistData = [
-        { text: "對服務人員態度傲慢", isRed: true },
-        { text: "初次見面肢體越界/開黃腔", isRed: true },
-        { text: "情緒失控/路怒症", isRed: true },
-        { text: "主動買單且大方", isRed: false },
-        { text: "懂得傾聽不搶話", isRed: false },
-        { text: "外表乾淨/指甲整潔", isRed: false }
-    ];
-
-    const clContainer = document.getElementById('checklist-container');
-    checklistData.forEach((item, index) => {
-        const div = document.createElement('div');
-        div.className = 'checklist-item';
-        const colorStyle = item.isRed ? 'color:#e53935;' : 'color:#43A047;';
-        div.innerHTML = `
-            <input type="checkbox" onchange="calcRadar()" data-red="${item.isRed}">
-            <span style="${colorStyle} font-weight:bold; margin-left: 10px;">${item.isRed ? '[紅旗]' : '[加分]'}</span>&nbsp; ${item.text}
-        `;
-        clContainer.appendChild(div);
-    });
-
-    function calcRadar() {
-        const inputs = document.querySelectorAll('#checklist-container input');
-        let redCount = 0; let greenCount = 0;
-        inputs.forEach(input => {
-            if (input.checked) {
-                if (input.getAttribute('data-red') === 'true') redCount++;
-                else greenCount++;
-            }
-        });
-        const resultBox = document.getElementById('radar-result');
-        resultBox.style.display = 'block';
-        if (redCount > 0) {
-            resultBox.innerHTML = `⚠️ 警告：發現 ${redCount} 個紅旗！<br>建議立即止損。`;
-            resultBox.style.background = "linear-gradient(135deg, #ef5350, #c62828)";
-        } else if (greenCount >= 2) {
-            resultBox.innerHTML = `✅ 潛力股：發現 ${greenCount} 個優點。<br>可以繼續觀察。`;
-            resultBox.style.background = "linear-gradient(135deg, #66bb6a, #2E7D32)";
-        } else {
-            resultBox.innerHTML = "🔍 資訊不足，請繼續觀察。";
-            resultBox.style.background = "linear-gradient(135deg, #ffa726, #ef6c00)";
-        }
-    }
-
-    // --- 5. 冷凍庫 Timer ---
+    // --- 5. 冷凍庫 (Timer) ---
     let timerInterval;
     function startFreeze(seconds) {
         clearInterval(timerInterval);
         const display = document.getElementById('timer-display');
         const msg = document.getElementById('freeze-msg');
-        const btn = document.getElementById('btn-freeze');
+        const btnS = document.getElementById('btn-freeze-short');
+        const btnL = document.getElementById('btn-freeze-long');
+        
         msg.style.display = 'block';
-        btn.classList.add('disabled');
-        btn.innerText = "❄️ 冷凍執行中...";
+        btnS.disabled = true; btnS.style.opacity = 0.5;
+        btnL.disabled = true; btnL.style.opacity = 0.5;
+        
+        updateTimer(display, seconds);
         timerInterval = setInterval(() => {
             seconds--;
-            const mins = Math.floor(seconds / 60).toString().padStart(2, '0');
-            const secs = (seconds % 60).toString().padStart(2, '0');
-            display.innerText = `${mins}:${secs}`;
-            if (seconds <= 0) {
+            updateTimer(display, seconds);
+            if(seconds <= 0) {
                 clearInterval(timerInterval);
-                display.innerText = "00:00";
                 msg.style.display = 'none';
-                btn.classList.remove('disabled');
-                btn.innerText = "⚡️ 體驗冷凍 (10秒)";
+                btnS.disabled = false; btnS.style.opacity = 1;
+                btnL.disabled = false; btnL.style.opacity = 1;
                 alert("❄️ 冷凍結束！\n妳現在已經冷靜了，可以用「簡短、溫柔」的語氣回覆了。");
             }
         }, 1000);
     }
+    function updateTimer(el, s) {
+        const h = Math.floor(s / 3600).toString().padStart(2,'0');
+        const m = Math.floor((s%3600)/60).toString().padStart(2,'0');
+        const sc = (s%60).toString().padStart(2,'0');
+        el.innerText = `${h}:${m}:${sc}`;
+    }
 
-    // --- 6. 道場 Quiz ---
+    // --- 6. 雷達 Checklist (擴充版: 高資產男篩選) ---
+    const checklistData = [
+        // 紅旗
+        { text: "對服務員/司機態度傲慢", isRed: true },
+        { text: "初次見面肢體越界", isRed: true },
+        { text: "情緒失控/路怒症", isRed: true },
+        { text: "開口閉口前任或媽媽", isRed: true },
+        { text: "會向妳借錢/忘帶錢包", isRed: true },
+        { text: "對未來毫無規劃", isRed: true },
+        { text: "言語打壓 (PUA)", isRed: true },
+        { text: "社群軟體追蹤大量網紅", isRed: true },
+        // 綠旗 (高資產觀察)
+        { text: "主動買單且大方", isRed: false },
+        { text: "記得妳的小習慣", isRed: false },
+        { text: "願意公開兩人關係", isRed: false },
+        { text: "有長期穩定的朋友", isRed: false },
+        { text: "支持妳的事業", isRed: false },
+        { text: "重視承諾，說到做到", isRed: false },
+        { text: "尊重妳的時間與邊界", isRed: false }
+    ];
+    const clContainer = document.getElementById('checklist-container');
+    checklistData.forEach(item => {
+        const div = document.createElement('div');
+        div.className = 'checklist-item';
+        div.innerHTML = `<input type="checkbox" onchange="calcRadar()" data-red="${item.isRed}">
+            <span style="color:${item.isRed?'#D32F2F':'#388E3C'};font-weight:bold;">${item.isRed?'[紅旗]':'[加分]'}</span>&nbsp;${item.text}`;
+        clContainer.appendChild(div);
+    });
+    function calcRadar() {
+        const inputs = document.querySelectorAll('#checklist-container input:checked');
+        let r=0, g=0;
+        inputs.forEach(i => i.getAttribute('data-red')==='true' ? r++ : g++);
+        const res = document.getElementById('radar-result');
+        res.style.display = 'block';
+        if(r>0) { 
+            res.innerHTML = `⚠️ 發現 ${r} 個紅旗！<br>高風險，建議止損！`; 
+            res.style.background="#FFEBEE"; res.style.color="#C62828"; 
+        } else if(g>=3) { 
+            res.innerHTML = `✅ 發現 ${g} 個優點。<br>潛力股，可繼續觀察。`; 
+            res.style.background="#E8F5E9"; res.style.color="#2E7D32"; 
+        } else { 
+            res.innerHTML = "🔍 資訊不足，請多觀察細節。"; 
+            res.style.background="#FFFDE7"; res.style.color="#FBC02D"; 
+        }
+    }
+
+    // --- 7. 道場 Quiz (50題 完整版) ---
     const quizData = [
-        { q: "週五晚上9點，他突然傳訊：「要不要出來喝一杯？」(備胎測試)", a: "❌ 不要罵人。<br>✅ 回覆：「哎呀真不巧，我已經休息了。下次早點約喔～(笑臉)」<br>💡 解析：建立時間邊界，教導他需要預約。" },
-        { q: "他問：「妳在幹嘛？」(閒暇測試)", a: "❌ 不要秒回行程表。<br>✅ 隔30分回：「剛忙完心情不錯。你呢？」<br>💡 解析：展示豐富生活，把球丟回去。" },
-        { q: "他踩到妳底線（例如遲到沒道歉）。", a: "❌ 不要大吵大鬧。<br>✅ 冷凍法：不讀不回直到明天。見面時淡淡說：「我不喜歡等人。」<br>💡 解析：沈默比吵架更有威懾力。" }
+        { q: "週五晚上9點，他傳訊：「要不要出來喝一杯？」(備胎測試)", a: "✅ 正解：「哎呀真不巧，我已經休息了。下次早點約喔～」\n💡 解析：建立時間邊界，需要預約的才是奢侈品。" },
+        { q: "他問：「妳在幹嘛？」(閒暇測試)", a: "✅ 正解：隔30分回：「剛忙完一個專案，心情不錯。你呢？」\n💡 解析：展示豐富生活，把球丟回去。" },
+        { q: "他問：「妳交過幾個男友？」(刺探隱私)", a: "✅ 正解：笑說：「這可是付費內容喔，熟一點再告訴你。」\n💡 解析：保持神祕感，不要面試般全盤托出。" },
+        { q: "約會結帳時，他提議 AA 制。", a: "✅ 正解：大方付掉自己的，然後刪除聯絡方式。\n💡 解析：年薪 300 萬還計較幾百塊，格局太小。" },
+        { q: "他說：「我現在還不想定下來。」", a: "✅ 正解：「真巧，我也還在觀察你適不適合長期發展。」\n💡 解析：不要乞求承諾，反客為主。" },
+        { q: "他送了妳不喜歡的禮物。", a: "✅ 正解：「謝謝你的心意！不過我其實比較常用XX色，下次可以注意一下～」\n💡 解析：獎勵行為，但調教品味。" },
+        { q: "他忽冷忽熱，兩天沒消息。", a: "✅ 正解：專注自己生活，完全不主動聯繫。\n💡 解析：敵不動我不動，比誰沉得住氣。" },
+        { q: "他開始對妳冷暴力。", a: "✅ 正解：徹底消失，比他更冷。\n💡 解析：冷暴力是逼妳分手的手段，成全他，優雅轉身。" },
+        { q: "他問：「如果我沒錢了妳還愛我嗎？」", a: "✅ 正解：「那你要加油喔，我不希望這種事情發生。」\n💡 解析：不要給男人軟爛的暗示。" },
+        { q: "妳覺得今天狀態不好，想找他抱怨。", a: "✅ 正解：打開這個 App 的冷凍庫，或去運動。\n💡 解析：男人是來錦上添花的，不是垃圾桶。" },
+        { q: "他傳了一張自拍照給妳。", a: "✅ 正解：回一個表情符號，或淡淡說「看起來氣色不錯」。\n💡 解析：不要當他的粉絲，要當他的評審。" },
+        { q: "剛認識就在訊息裡開黃腔。", a: "✅ 正解：不讀不回，或冷回：「我不喜歡這個玩笑。」\n💡 解析：這是一票否決的紅旗，零容忍。" },
+        { q: "半夜一點傳訊息：「睡了嗎？」", a: "✅ 正解：直接無視，第二天早上再回。\n💡 解析：深夜的邀約通常只有性，沒有愛。" },
+        { q: "訊息已讀不回超過 24 小時，突然回覆：「抱歉剛在忙。」", a: "✅ 正解：再隔 12-24 小時回覆，語氣正常但不熱情。\n💡 解析：鏡像法則。不要獎勵他的忽視。" },
+        { q: "他問：「妳喜歡我嗎？」", a: "✅ 正解：「目前感覺還不錯，看你接下來的表現囉。」\n💡 解析：保持懸念，讓他繼續追逐。" },
+        { q: "第一次約會，他遲到 20 分鐘且沒有提前通知。", a: "✅ 正解：15分鐘時離開。事後回：「我還有事先行一步了。」\n💡 解析：妳的時間成本極高，遲到是底線問題。" },
+        { q: "他臨時改約會地點，從餐廳改成「去我家看貓」。", a: "✅ 正解：「我比較習慣在外面見面，還是約原來的餐廳吧。」\n💡 解析：堅定拒絕私密空間邀約，保護安全。" },
+        { q: "約會中他一直在看手機、回訊息。", a: "✅ 正解：微笑著停下來不說話，看著他直到他發現。\n💡 解析：溫柔地撤回關注。" },
+        { q: "他約妳去吃路邊攤或很隨便的行程。", a: "✅ 正解：「今天穿了高跟鞋不太方便耶，我們換個地方？」\n💡 解析：溫柔地設立標準，引導他投入更多。" },
+        { q: "他說：「妳太強勢了，我喜歡溫柔一點的。」", a: "✅ 正解：「我對喜歡的人很溫柔，前提是對方值得。」\n💡 解析：不卑不亢，暗示是他還沒達到標準。" },
+        { q: "他評論妳的穿著：「妳裙子太短了吧？」", a: "✅ 正解：「會嗎？我覺得這顯得我腿很長，好看嗎？」\n💡 解析：保持框架，不要因為他的打壓而自我懷疑。" },
+        { q: "他在妳面前誇獎其他女生。", a: "✅ 正解：淡淡地說：「是喔，她確實蠻漂亮的。」然後轉移話題。\n💡 解析：展現絕對自信，不屑於比較。" },
+        { q: "他要求妳傳性感照片。", a: "✅ 正解：「我只給男朋友看耶，而且是面對面的時候。」\n💡 解析：設立門檻，保護隱私，同時調情。" },
+        { q: "發現他還留著前女友的照片，或按辣妹讚。", a: "✅ 正解：觀察他的投入度。如果不尊重妳，冷處理或換人。\n💡 解析：女王不與宮女爭寵。他不改，妳就換。" },
+        { q: "他問：「妳為什麼單身？」(打壓測試)", a: "✅ 正解：「因為我對另一半的要求很高呀(微笑)。」\n💡 解析：將問題框架轉化為「我是高標準的獎品」。" },
+        { q: "他稱讚妳：「妳跟其他女生很不一樣，很懂事。」", a: "✅ 正解：警惕。笑回：「是嗎？我有時候也挺任性的喔。」\n💡 解析：保留任性的權利。" },
+        { q: "他總是說自己很忙，沒時間見面。", a: "✅ 正解：後撤。把時間填滿其他行程。\n💡 解析：沒有人忙到傳個訊息都要三天。" },
+        { q: "吵架時，他大吼大叫或摔東西。", a: "✅ 正解：冷靜離開現場，確保安全。事後考慮分手。\n💡 解析：有暴力傾向直接淘汰。" },
+        { q: "他嘲笑妳的興趣。", a: "✅ 正解：「這是我的樂趣，你不懂沒關係，但請尊重。」\n💡 解析：愛妳的人會愛屋及烏，至少會尊重。" },
+        { q: "他試圖讓妳嫉妒。", a: "✅ 正解：笑說：「那你眼光不錯啊，不過要追我的人也排到法國了。」\n💡 解析：反向操作，讓他知道妳才是稀缺資源。" },
+        { q: "妳發現他同時在跟別人曖昧。", a: "✅ 正解：直接冷掉，開始接觸其他優質對象。\n💡 解析：不要在垃圾堆裡找男友。" },
+        { q: "分手後他想回來當朋友。", a: "✅ 正解：「我朋友夠多了，不缺你一個。」\n💡 解析：拒絕提供免費的情緒價值。" },
+        { q: "他在朋友面前損妳，說是開玩笑。", a: "✅ 正解：當場嚴肅臉：「這個玩笑不好笑。」\n💡 解析：教別人如何對待妳。" },
+        { q: "他說前女友都是瘋子。", a: "✅ 正解：警惕。心想：「下一個瘋子可能就是我。」\n💡 解析：全盤否定前任的人，通常自己才有問題。" },
+        { q: "他對妳的身體特徵指指點點。", a: "✅ 正解：「我就喜歡我這樣。如果你不喜歡，門在那邊。」\n💡 解析：PUA 的前兆。" },
+        { q: "他總是忘記重要的紀念日。", a: "✅ 正解：提前告知。若再忘，嚴肅溝通。\n💡 解析：不執行就懲罰。" },
+        { q: "他很久沒有誇獎妳或表達愛意。", a: "✅ 正解：自己打扮漂亮出去聚會，發美照。\n💡 解析：讓他產生危機感。" },
+        { q: "他想向妳借錢投資或周轉。", a: "✅ 正解：「我原則上不跟男友有金錢往來耶，抱歉。」\n💡 解析：好男人不會跟女友借錢。" },
+        { q: "妳發現自己在這段關係中越來越沒自信。", a: "✅ 正解：如果他讓妳黯淡，離開他。\n💡 解析：錯的人會吸乾妳的能量。" },
+        { q: "他條件很好，但對妳不好。", a: "✅ 正解：放手。垃圾包裝得再漂亮還是垃圾。\n💡 解析：情緒價值 > 社會價值。" },
+        { q: "家人朋友都反對這段感情。", a: "✅ 正解：冷靜思考旁觀者的意見。\n💡 解析：戀愛腦會瞎，旁觀者清。" },
+        { q: "他總是說「我配不上妳」。", a: "✅ 正解：相信他。然後離開。\n💡 解析：這是他在推卸責任。" },
+        { q: "妳覺得很累，這段關係只有妳在努力。", a: "✅ 正解：停止划槳，看船會漂向哪裡。\n💡 解析：雙向奔赴才有意義。" },
+        { q: "他對妳說：「妳變了，以前妳很聽話的。」", a: "✅ 正解：「我更喜歡現在的自己。」\n💡 解析：他懷念的是那個好操控的傀儡。" },
+        { q: "分手後忍不住想視姦他的社群。", a: "✅ 正解：全平台封鎖。眼不見為淨。\n💡 解析：視姦是自虐。" },
+        { q: "路上看到帥哥/優質男。", a: "✅ 正解：大大方方欣賞。保持市場敏銳度。\n💡 解析：擁有隨時能離開的底氣。" },
+        { q: "他問：「週末要幹嘛？」但沒說要約妳。", a: "✅ 正解：「我要去健身/跟朋友吃飯，行程滿檔。」\n💡 解析：不要預留時間給沒預約的人。" },
+        { q: "妳今天想他了，很想主動找他。", a: "✅ 正解：傳一張有趣的照片(不說話)，引誘他來找妳。\n💡 解析：製造誘餌(Bait)。" },
+        { q: "最後一題：妳是誰？", a: "✅ 正解：我是定價 450 的限量盲盒，獨一無二的珍寶。\n💡 解析：永遠記住妳的身價 (Labubu Mindset)。" }
     ];
     let quizIdx = 0;
     function renderQuiz() {
         document.getElementById('dojo-q').innerText = quizData[quizIdx].q;
+        document.getElementById('dojo-a').innerText = quizData[quizIdx].a;
         document.getElementById('dojo-a').style.display = 'none';
-        document.getElementById('dojo-a').innerHTML = quizData[quizIdx].a;
+        document.getElementById('quiz-counter').innerText = `${quizIdx + 1} / ${quizData.length}`;
+        document.getElementById('btn-show-ans').style.display = 'inline-block';
     }
-    function showAnswer() { document.getElementById('dojo-a').style.display = 'block'; }
-    function nextQuiz(dir) {
-        quizIdx += dir;
-        if (quizIdx < 0) quizIdx = quizData.length - 1;
-        if (quizIdx >= quizData.length) quizIdx = 0;
+    function showAnswer() { 
+        document.getElementById('dojo-a').style.display = 'block'; 
+        document.getElementById('btn-show-ans').style.display = 'none';
+    }
+    function nextQuiz(d) {
+        quizIdx += d;
+        if(quizIdx < 0) quizIdx = quizData.length-1;
+        if(quizIdx >= quizData.length) quizIdx = 0;
         renderQuiz();
     }
     renderQuiz();
-
 </script>
 
 </body>
